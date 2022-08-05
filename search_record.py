@@ -27,7 +27,7 @@ class SearchRecord:
                     email = data[website_entry]['email'] # get the email value from the database
                     password = data[website_entry]['password']# get the password value from the database
                     print("Website/App is found in database")
-                    messagebox.showinfo(title=f"{website_entry.title()}" , message=f"Email/Username: {email} \nPassword: {password} \nAnd the password has been copied to your clipboard!") # prompt out the to display the email and password from database
+                    messagebox.showinfo(title=f"\"{website_entry}\"" , message=f"--- Email/Username: {email} \n--- Password: {password} \n\nThe password has been copied to your clipboard!") # prompt out the to display the email and password from database
                     pyperclip.copy(password) # automatically copy the password to user's clipboard
                 else: # if the website is not found in the database
-                    messagebox.showinfo(title=f"{website_entry} is not found!", message=f"{website_entry} is not exist in the current database!") # prompt out a info window to show the particular website/app is not in the database record
+                    messagebox.showinfo(title=f"\"{website_entry}\" is not found!", message=f"{website_entry} is not exist in the current database!") # prompt out a info window to show the particular website/app is not in the database record

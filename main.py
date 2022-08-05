@@ -60,7 +60,7 @@ or_label = Label(text="OR", bg="white")
 or_label.grid(row=3, column=2)
 or_label.config(padx=10, pady=10)
 
-save_record = SaveData(website_entry, email_username_entry, password_entry)
+save_record = SaveData(website_entry, email_username_entry, password_entry, space_label)
 
 add_button = Button(text="Add to database", width=53, height=2, command=save_record.save_data)
 add_button.grid(row=5, column=1, columnspan=3)
