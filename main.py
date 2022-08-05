@@ -65,7 +65,8 @@ save_record = SaveData(website_entry, email_username_entry, password_entry, spac
 add_button = Button(text="Add to database", width=53, height=2, command=save_record.save_data)
 add_button.grid(row=5, column=1, columnspan=3)
 
-
+name_label = Label(text="by Simon", bg="white", fg="grey")
+name_label.place(x=-70, y=400)
 
 
 window.mainloop() # keep the screen running 
