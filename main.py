@@ -7,38 +7,43 @@ import json
 #* ------------------------------------------ SEARCH PASSWORD FROM JSON ------------------------------------------------- #
 
 def search_record():
-    website_entry_input = website_entry.get().title()
-    if website_entry_input == "":
-        messagebox.showinfo(title="Invalid Input", message="Please insert website/app name you want to search for")
-    else:                   
-        try:
-            with open("./password_database.json", "r") as json_database:
-                data = json.load(json_database)
+    '''search the record from database when the search button is pressed'''
+    website_entry_input = website_entry.get().title() # get the data from website entry and convert it to title case
+    
+    if website_entry_input == "": # check if the website entry is empty
+        messagebox.showinfo(title="Invalid Input", message="Please insert website/app name you want to search for") # prompt out a info window if the website entry is empty
+    else: # if not empty, try to search the record from json file
+        try: # catch the error if the json file is not exist
+            with open("./password_database.json", "r") as json_database:  # open and set as read mode the json file 
+                data = json.load(json_database) # read and load the data from json file
                 
-        except FileNotFoundError:
-            messagebox.showwarning(title="File not found!", message="There is no database is found!")
+        except FileNotFoundError: # if the json file is not exist
+            messagebox.showwarning(title="File not found!", message="There is no database is found!")  # prompt out a warning window if the json file is not exist
         
-        else:
-            if website_entry_input in data:
-                email = data[website_entry_input]['email']
-                password = data[website_entry_input]['password']
+        else: # execute this block of code if the file is exist and able to read
+            if website_entry_input in data: # if the user input website is in the database record
+                email = data[website_entry_input]['email'] # get the email value from the database
+                password = data[website_entry_input]['password']# get the password value from the database
                 print("Website/App is found in database")
-                messagebox.showinfo(title=f"{website_entry_input.title()}" , message=f"Email/Username: {email} \nPassword: {password} \nAnd the password has been copied to your clipboard!")
-                pyperclip.copy(password)
-            else:
-                messagebox.showinfo(title=f"{website_entry_input} is not found!", message=f"{website_entry_input} is not exist in the current database!")
+                messagebox.showinfo(title=f"{website_entry_input.title()}" , message=f"Email/Username: {email} \nPassword: {password} \nAnd the password has been copied to your clipboard!") # prompt out the to display the email and password from database
+                pyperclip.copy(password) # automatically copy the password to user's clipboard
+            else: # if the website is not found in the database
+                messagebox.showinfo(title=f"{website_entry_input} is not found!", message=f"{website_entry_input} is not exist in the current database!") # prompt out a info window to show the particular website/app is not in the database record
 
 
 
 #* ------------------------------------------------- PASSWORD GENERATOR ------------------------------------------------- #
 
 def generate_password():
+    '''generate a random password if the user press "Generate Password button'''
+    
+    # create the compete letter, number and symbol list for generate randomly
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
 
-    # repeat a random number times to random choose letter, number and symbol
+    # repeat a random number times to random choose letter, number and symbol from the list
     password_letter = [choice(letters) for _ in range(randint(8, 12))]
     password_number = [choice(numbers) for _ in range(randint(1, 5))]
     password_symbol = [choice(symbols) for _ in range(randint(1, 5))]
@@ -47,17 +52,17 @@ def generate_password():
     password_list = password_letter + password_number + password_symbol
 
 
-    # shuffle is to shuffle the list order
+    # shuffle the list order
     shuffle(password_list)
 
     # join all the item in the list/tuple into a single string
     password = "".join(password_list)
     
     # insert the randomize password into password entry
-    password_entry.delete(0, END) # remove the current password
-    password_entry.insert(0, password) # insert new randomized password
+    password_entry.delete(0, END) # remove the current password, delete(from_0_index, to_last_index)
+    password_entry.insert(0, password) # insert new randomized password, insert(from_0_index, content)
     
-    pyperclip.copy(password)
+    pyperclip.copy(password) # automatically copy 
     space_label.config(text="Your random password has been copied to your clipboard!", fg="red")
 
 
