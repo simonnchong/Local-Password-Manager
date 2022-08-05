@@ -12,7 +12,8 @@ class SaveData:
         self.space_label = space_label
     
     def clear_entry(self):
-         # after saved the data into database    
+        '''clear the entry field'''
+        # after saved the data into database    
         # write -> clear the website entry field
         self.website_entry.delete(0, END) # remove the current text
         # website_entry.insert(0, "text_here") # insert an specific string to it
@@ -79,6 +80,7 @@ class SaveData:
                 except FileNotFoundError:
                     with open("./password_database.json", "w") as data_file:
                         json.dump(new_data, data_file, indent=4) # dump(object_you_wanna_to_save, location_of_the_file, number_of_indentation_space)
+                        self.clear_entry()
             
                 #? if the file is exist, then update the new entry into the json file
                 else:
